@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}       # Use username from .env
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}       # Use password from .env
+      RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_VHOST}     # Default virtual host
+    ports:
+      - "5672:5672"     # RabbitMQ AMQP protocol port
+      - "15672:15672"   # RabbitMQ management UI port (default is 15672)
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq       # Persist RabbitMQ data
+
+volumes:
+  rabbitmq_data:
+    driver: local
